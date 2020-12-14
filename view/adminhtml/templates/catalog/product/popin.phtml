@@ -1,0 +1,29 @@
+<?php
+/* @var $block \Sga\Configview\Block\Adminhtml\Catalog\Product\Popin */
+if ($block->isEnabled()) :
+    $config = [
+        'product' => $block->getCurrentProductId(),
+        'elements' => [
+            'btn' => '#loadRewrite',
+            'popin' => '#configview_popin',
+            'popin_close' => '#configview_popin .close',
+            'popin_container' => '#configview_popin_container',
+            'form_elements' => '#container .admin__field-control input[name*=product], #container .admin__field-control select[name*=product], #container .admin__field-control textarea[name*=product]'
+        ],
+        'urls' => [
+            'load_rewrite' => $block->getUrlBuilder()->getUrl('configview/product/loadRewrite'),
+            'load_popin' => $block->getUrlBuilder()->getUrl('configview/product/loadPopin')
+        ]
+    ];
+?>
+<div id="configview_popin" style="display:none">
+    <div>
+        <a href="javascript:void(0)" class="close"><?= __('Close') ?></a>
+        <div id="configview_popin_container"></div>
+    </div>
+</div>
+
+<script type="text/x-magento-init">
+{"#loadRewrite": {"Sga_Configview/js/catalog/product": <?= $block->getJsonSerializer()->serialize($config) ?>}}
+</script>
+<?php endif ?>

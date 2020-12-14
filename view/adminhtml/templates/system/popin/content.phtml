@@ -1,0 +1,87 @@
+<?php
+/* @var $this Sga\Configview\Block\Adminhtml\System\Popin */
+$defaultValue = $this->getDefaultValue();
+
+$urlParamsDefault = array(
+    'section' => $this->getSection()
+);
+
+$errorInDefault = (!$this->isShowInDefault() && $defaultValue !== null) ? true : false;
+?>
+<div class="show-in">
+    <ul>
+        <li>
+            <label><?= __('Key') ?> :</label>
+            <?= $this->getKey() ?>
+        </li>
+        <li>
+            <label><?= __('Show In Default') ?> :</label>
+            <?= __(($this->isShowInDefault() ? 'Yes' : 'No')) ?>
+        </li>
+        <li>
+            <label><?= __('Show In Website') ?> :</label>
+            <?= __(($this->isShowInWebsite() ? 'Yes' : 'No')) ?>
+        </li>
+        <li>
+            <label><?= __('Show In Store') ?> :</label>
+            <?= __(($this->isShowInStore() ? 'Yes' : 'No')) ?>
+        </li>
+    </ul>
+</div>
+
+<div class="xml-value">
+    <label><?= __('Xml value') ?> :</label>
+    <?php $xmlValue = $this->getXmlValue() ?>
+    <?= $xmlValue !== null ? htmlentities($xmlValue) : '<span>NULL</span>' ?>
+</div>
+
+<div class="default">
+    <label><a href="<?= $this->getUrlBuilder()->getUrl('adminhtml/system_config', $urlParamsDefault) ?>"><?= __('Default') ?></a></label> :
+    <?= $defaultValue !== null ? htmlentities($defaultValue) : '<span>NULL</span>' ?>
+    <?php if($errorInDefault): ?>
+        <span class="error"><?= __('This value is define but it\'s impossible to edit from BO !') ?></span>
+    <?php endif ?>
+</div>
+
+<?php foreach($this->getStoreManager()->getWebsites() as $website): ?>
+<?php
+$websiteValue = $this->getWebsiteValue($website->getId());
+$deleteWebsiteValue = ''; //'<a class="delete" href="javascript:void(0)" onclick="configView.deleteConfig(\''.$this->getSection().'\', \''.$this->getGroup().'\', \''.$this->getField().'\', \'websites\', '.$website->getId().')">['.$_translator->__('Delete').']</a>';
+$urlParamsWebsite = array(
+    'section' => $this->getSection(),
+    'website' => $website->getId()
+);
+$errorInWebsite = (!$this->isShowInWebsite() && $websiteValue !== null) ? true : false;
+?>
+<ul class="scopes">
+    <li>
+        <label><a href="<?= $this->getUrlBuilder()->getUrl('adminhtml/system_config', $urlParamsWebsite) ?>"><?= $website->getName() ?></a></label> :
+        <?= $websiteValue !== null ? htmlentities($websiteValue).$deleteWebsiteValue : '<span>NULL</span>' ?>
+        <?php if($errorInWebsite): ?>
+            <span class="error"><?= __('This value is define but it\'s impossible to edit from BO !') ?></span>
+        <?php endif ?>
+    </li>
+    <li>
+        <?php foreach($website->getStores() as $store): ?>
+        <?php
+        $storeValue = $this->getStoreValue($store->getId());
+        $deleteStoreValue = ''; //'<a class="delete" href="javascript:void(0)" onclick="configView.deleteConfig(\''.$this->getSection().'\', \''.$this->getGroup().'\', \''.$this->getField().'\', \'stores\', '.$store->getId().')">['.$_translator->__('Delete').']</a>';
+        $urlParamsStore = array(
+            'section' => $this->getSection(),
+            'store' => $store->getId()
+        );
+        $errorInStore = (!$this->isShowInStore() && $storeValue !== null) ? true : false;
+        ?>
+        <ul>
+            <li>
+                <label><a href="<?= $this->getUrlBuilder()->getUrl('adminhtml/system_config', $urlParamsStore) ?>"><?= $store->getName() ?> :</a></label>
+                <?= $storeValue !== null ? htmlentities($storeValue).$deleteStoreValue : '<span>NULL</span>' ?>
+                <?php if($errorInStore): ?>
+                    <span class="error"><?= __('This value is define but it\'s impossible to edit from BO !') ?></span>
+                <?php endif ?>
+            </li>
+        </ul>
+        <?php endforeach ?>
+    </li>
+</ul>
+<?php endforeach ?>
