@@ -6,7 +6,8 @@ if ($block->isEnabled()) :
             'popin' => '#configview_popin',
             'popin_close' => '#configview_popin .close',
             'popin_container' => '#configview_popin_container',
-            'form_elements' => '#config-edit-form fieldset.config td.value input[type=text], #config-edit-form fieldset.config td.value select, #config-edit-form fieldset.config td.value textarea'
+            'form_elements' => '#config-edit-form fieldset.config > .form-list td.value',
+            'inherit_field' => 'td.use-default .config-inherit'
         ],
         'urls' => [
             'load_rewrite' => $block->getUrlBuilder()->getUrl('configview/system/loadRewrite'),

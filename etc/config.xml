@@ -4,7 +4,6 @@
         <configview>
             <general>
                 <enabled_system>1</enabled_system>
-                <enabled_catalog_product>1</enabled_catalog_product>
             </general>
         </configview>
     </default>
