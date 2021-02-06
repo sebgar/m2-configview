@@ -6,7 +6,7 @@ use Magento\Store\Model\ScopeInterface;
 
 class Config extends AbstractHelper
 {
-    const XML_PATH_CONFIGVIEW_ENABLED_SYSTEM = 'configview/general/enabled_system';
+    const XML_PATH_CONFIGVIEW_ENABLED_SYSTEM = 'admin/configview/enabled_system';
 
     public function isEnabledSystem($store = null)
     {
