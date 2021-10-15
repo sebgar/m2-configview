@@ -62,7 +62,7 @@ class Data extends AbstractHelper
         $rs = $select->reset()
             ->from($this->_collection->getTable('core_config_data'), 'value')
             ->where('path = "'.$section.'/'.$group.'/'.$field.'"')
-            ->where('scope=?', 'website')
+            ->where('scope=?', 'websites')
             ->where('scope_id=?', $websiteId)
             ->query();
 
